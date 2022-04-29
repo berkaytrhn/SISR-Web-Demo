@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISR</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1> Single Image Super Resolution App</h1>
+    <h2> Upload an Image and Select Region</h2>
+    <div id="container">
+        <form id="form">
+            <img src="#" id="image" alt="">
+            <canvas id="canvas"></canvas>
+            <div id="result"></div>
+            <input type="file" id="fileInput">
+            <button type="submit">Upload</button>
+        </form>
+
+        <div id="low_res_wrapper">
+            <canvas id="cropped"></canvas>
+            <canvas hidden id="result_image"></canvas>
+            <!--result_image canvas ta hidden status kaldırılacak result image geldiğinde-->
+            <div id="loading_gif"></div>
+        </div>
+        
+
+
+        
+    </div>
+    <script src="app.js" type="module"></script>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <script async src="./opencv.js"></script>
+</body>
+</html>

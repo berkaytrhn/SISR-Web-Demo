@@ -1,0 +1,97 @@
+#canvas{
+    max-width: 20%;
+    max-height: 20%;
+}
+
+#low_res_wrapper{
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+#loading_gif{
+    display: block;
+}
+
+#cropped, #result_image{
+    padding: 2%;
+    
+}
+
+#rectangleDiv {
+    border: 1px solid red;
+    position: absolute;
+}
+
+body{
+  margin-top: 2%;
+}
+
+#form{
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px;
+    border-color: black;
+}
+
+#result{
+  color: rgb(138, 31, 31);
+  font-weight: bold;
+  padding: 1%;
+  font-size: large;
+  display: block;
+  
+}
+
+img{
+  display: block;
+  margin: auto;
+  padding: 2%;
+}
+
+#fileInput{
+  display: inline;
+  margin: auto;
+  padding: 1%;
+  overflow: hidden;
+  position: relative;
+}
+
+h1, h2{
+  text-align: center;
+  font-weight: bold;
+}
+
+#fileInput::file-selector-button{
+  padding: 4%;
+  border-radius: 4px;
+  border: 0ch;
+  background-color: rgb(60, 60, 175);
+  color: azure;
+  opacity: 0.7;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+#fileInput::file-selector-button:hover{
+  opacity: 1;
+}
+
+button{
+  display: inline;
+  padding: 1%;
+  width: 7%;
+  border-radius: 4px;
+  background-color: rgb(60, 60, 175);
+  color: azure;
+  font-weight: bold;
+  transition: 0.3s;
+  opacity: 0.7;
+  border: 0ch;
+}
+
+button:hover{
+  opacity: 1;
+}
