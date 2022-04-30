@@ -1,22 +1,21 @@
-let main = () => {
-    const form = document.getElementById("form");
-    const inputFile = document.getElementById("fileInput");
-    const canvas = document.getElementById("canvas");
+const form = document.getElementById("form");
+const inputFile = document.getElementById("fileInput");
+const canvas = document.getElementById("canvas");
 
-    const IMAGE_SIZE=256
+const IMAGE_SIZE=256;
 
-    
-    let canvas_width=null;
-    let canvas_height=null;
-    let image_width=null;
-    let image_height=null;
-    let relative_x=null;
-    let relative_y=null;
+let canvas_width=null;
+let canvas_height=null;
+let image_width=null;
+let image_height=null;
+let relative_x=null;
+let relative_y=null;
 
-    let sent=false;
-    let is_selected=false;
+let sent=false;
+let is_selected=false;
 
 
+let main = () => {    
     let preprocess_image=(image)=>{
         let low_res=Math.ceil(IMAGE_SIZE*0.4)
         let size_l=new cv.Size(low_res, low_res);
@@ -47,9 +46,10 @@ let main = () => {
         cropped=preprocess_image(cropped);
 
         console.log(img);
+        console.log("cropped image: ", cropped); 
         cv.imshow("cropped", cropped);
         //cv.imshow("result_image", cropped);
-        cropped.delete();
+        cropped.delete(); 
 
         // draw rectangle
         cv.rectangle(
@@ -63,7 +63,7 @@ let main = () => {
                 y+(IMAGE_SIZE/2)
             ),
             sclr,
-            4
+            5
         );
 
         console.log("draw coords", x, y)
@@ -153,7 +153,10 @@ let main = () => {
             event.preventDefault();
 
             let endpoint = "http://localhost:5000/upload/";
-            let formData = new FormData();
+            
+            // clear result image
+            document.getElementById("result_image").hidden=true;            
+            
 
             let cropped_image=document.getElementById("cropped");
             let cropped_data=cropped_image.getContext("2d").getImageData(0,0,IMAGE_SIZE, IMAGE_SIZE)
@@ -170,6 +173,7 @@ let main = () => {
 let set_loading = () => {
     let result = document.getElementById("loading_gif");
     let gif = document.createElement("img");
+    gif.id="gif";
     gif.src="loading.gif";
     gif.style.maxHeight= "10%";
     gif.style.maxWidth= "10%";
@@ -201,20 +205,41 @@ let upload_image = async (endpoint, data) =>{
             }
         }
     ).then(response => {
+        // smooth loading 
         setTimeout(() => {
             handle_response(response.data);
-        }, 1500);
+        }, 1000);
     });
 }
 
 // silinebilir.
 let handle_response = (response) => {
+    // parse json response
+    response=JSON.parse(response);
+    response=[].concat(...response);
+    response=[].concat(...response);
     console.log(response);
-    let pred = response.Predicted;
-    document.getElementById("result").innerHTML = pred;
+
+
+    let mat =cv.matFromArray(IMAGE_SIZE, IMAGE_SIZE, cv.CV_32FC4, response);
+    console.log("res mat: ", mat);
+    cv.imshow("result_image", mat);
+    mat.delete(); 
+
+
+    // remove loading gif etc.
+    let loading=document.getElementById("loading_gif");
+    loading.innerHTML="";
+    loading.hidden=true;
+
+    let result_image=document.getElementById("result_image");
+    result_image.hidden=false;
+
+    
+    is_selected=false;
+    sent=false;
+
 }
-//result image geldiğinde is_selected=false yap
-//result image geldiğinde sent=false yap
 
 
 
